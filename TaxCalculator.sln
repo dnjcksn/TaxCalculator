@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator.Domain", "TaxCalculator.Domain\TaxCalculator.Domain.csproj", "{FC179EC1-B731-42E5-B4E1-22177E22A105}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator.Application", "TaxCalculator.Application\TaxCalculator.Application.csproj", "{DC12F0F4-1FD3-46B2-BD46-2C05C2159F52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{FC179EC1-B731-42E5-B4E1-22177E22A105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC179EC1-B731-42E5-B4E1-22177E22A105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC179EC1-B731-42E5-B4E1-22177E22A105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC12F0F4-1FD3-46B2-BD46-2C05C2159F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC12F0F4-1FD3-46B2-BD46-2C05C2159F52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC12F0F4-1FD3-46B2-BD46-2C05C2159F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC12F0F4-1FD3-46B2-BD46-2C05C2159F52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
