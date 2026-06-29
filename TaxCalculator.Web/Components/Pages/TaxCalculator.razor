@@ -1,5 +1,6 @@
 @page "/"
 @rendermode InteractiveServer
+@inject ITaxCalculatorService TaxCalculatorService
 
 <div class="container mt-5">
     <div class="text-center">
@@ -10,6 +11,36 @@
             <input id="salary" type="number" class="form-control w-auto" @bind="grossAnnualSalary" />
             <button class="btn btn-primary" @onclick="Calculate">Calc</button>
         </div>
+
+        @if (taxSummary is not null)
+        {
+            <table class="table table-borderless mx-auto w-auto">
+                <tr>
+                    <td class="text-start">Gross Annual Salary:</td>
+                    <td class="text-end">£@taxSummary.GrossAnnualSalary.ToString("F2")</td>
+                </tr>
+                <tr>
+                    <td class="text-start">Gross Monthly Salary:</td>
+                    <td class="text-end">£@taxSummary.GrossMonthlySalary.ToString("F2")</td>
+                </tr>
+                <tr>
+                    <td class="text-start">Net Annual Salary:</td>
+                    <td class="text-end">£@taxSummary.NetAnnualSalary.ToString("F2")</td>
+                </tr>
+                <tr>
+                    <td class="text-start">Net Monthly Salary:</td>
+                    <td class="text-end">£@taxSummary.NetMonthlySalary.ToString("F2")</td>
+                </tr>
+                <tr>
+                    <td class="text-start">Annual Tax Paid:</td>
+                    <td class="text-end">£@taxSummary.AnnualTax.ToString("F2")</td>
+                </tr>
+                <tr>
+                    <td class="text-start">Monthly Tax Paid:</td>
+                    <td class="text-end">£@taxSummary.MonthlyTax.ToString("F2")</td>
+                </tr>
+            </table>
+        }
     </div>
 </div>
 
@@ -20,6 +51,6 @@
 
     private async Task Calculate()
     {
-        taxSummary = null;
+        taxSummary = await TaxCalculatorService.Calculate(grossAnnualSalary);
     }
 }
