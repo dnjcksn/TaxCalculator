@@ -7,7 +7,7 @@ public class TaxCalculatorDbContext : DbContext
 {
     public TaxCalculatorDbContext(DbContextOptions<TaxCalculatorDbContext> options) : base(options)
     {
-        
+
     }
 
     public DbSet<TaxBand> TaxBands { get; set; }
