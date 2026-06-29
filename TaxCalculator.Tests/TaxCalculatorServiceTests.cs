@@ -1,5 +1,6 @@
 using Moq;
 using FluentAssertions;
+using Microsoft.Extensions.Logging.Abstractions;
 using TaxCalculator.Domain;
 using TaxCalculator.Application;
 
@@ -21,7 +22,7 @@ public class TaxCalculatorServiceTests
             .Setup(r => r.GetAllAsync())
             .ReturnsAsync(_taxBands);
 
-        _service = new TaxCalculatorService(mockTaxBandRepository.Object);
+        _service = new TaxCalculatorService(mockTaxBandRepository.Object, new NullLogger<TaxCalculatorService>());
     }
 
     [Fact]

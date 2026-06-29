@@ -1,6 +1,6 @@
 namespace TaxCalculator.Application;
 
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using TaxCalculator.Domain;
 
 public class TaxCalculatorService : ITaxCalculatorService
@@ -10,14 +10,18 @@ public class TaxCalculatorService : ITaxCalculatorService
     private const int CurrencyDecimalPlaces = 2;
 
     private readonly ITaxBandRepository _taxBandRepository;
+    private readonly ILogger<TaxCalculatorService> _logger;
 
-    public TaxCalculatorService(ITaxBandRepository taxBandRepository)
+    public TaxCalculatorService(ITaxBandRepository taxBandRepository, ILogger<TaxCalculatorService> logger)
     {
         _taxBandRepository = taxBandRepository;
+        _logger = logger;
     }
 
     public async Task<TaxSummary> Calculate(decimal grossAnnualSalary)
     {
+        _logger.LogInformation("Calculating tax summary for gross annual salary {GrossAnnualSalary}", grossAnnualSalary);
+
         var taxBands = await _taxBandRepository.GetAllAsync();
         var annualTax = CalculateAnnualTax(grossAnnualSalary, taxBands);
         var netAnnualSalary = grossAnnualSalary - annualTax;
@@ -49,9 +53,21 @@ public class TaxCalculatorService : ITaxCalculatorService
                 var upperLimit = GetUpperLimit(rangedTaxBand, grossAnnualSalary);
                 var taxBandAmount = upperLimit - rangedTaxBand.TaxBand.LowerLimit;
                 var taxBandPercentage = rangedTaxBand.TaxBand.TaxRate / 100m;
-                annualTax += taxBandAmount * taxBandPercentage;
+                var tax = taxBandAmount * taxBandPercentage;
+                _logger.LogDebug(
+                    "Calculated tax for {Band}: {LowerLimit}-{UpperLimit}, {Rate}% of {Amount} = {Tax}",
+                    rangedTaxBand.TaxBand.Name,
+                    rangedTaxBand.TaxBand.LowerLimit,
+                    upperLimit,
+                    rangedTaxBand.TaxBand.TaxRate,
+                    taxBandAmount,
+                    tax
+                );
+                annualTax += tax;
             }
         }
+
+        _logger.LogInformation("Annual tax calculated as {AnnualTax}", annualTax);
 
         return annualTax;
     }
