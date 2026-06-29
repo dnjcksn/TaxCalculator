@@ -1,4 +1,25 @@
 @page "/"
 @rendermode InteractiveServer
 
-<h1 class="mb-4">Tax Calculator</h1>
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="mb-4">Tax Calculator</h1>
+
+        <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
+            <label for="salary">Gross Annual Salary:</label>
+            <input id="salary" type="number" class="form-control w-auto" @bind="grossAnnualSalary" />
+            <button class="btn btn-primary" @onclick="Calculate">Calc</button>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    private decimal grossAnnualSalary;
+    private TaxSummary? taxSummary;
+
+    private async Task Calculate()
+    {
+        taxSummary = null;
+    }
+}
